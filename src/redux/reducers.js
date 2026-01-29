@@ -1,23 +1,6 @@
 // Recipe Reducer
 const recipeInitialState = {
-  recipes: JSON.parse(localStorage.getItem('recipes')) || [
-    {
-      id: 1,
-      name: 'Doro Wat',
-      description: 'Ethiopian chicken stew',
-      image: 'https://via.placeholder.com/300x200?text=Doro+Wat',
-      userId: 1,
-      author: 'demo'
-    },
-    {
-      id: 2,
-      name: 'Injera',
-      description: 'Ethiopian flatbread',
-      image: 'https://via.placeholder.com/300x200?text=Injera',
-      userId: 1,
-      author: 'demo'
-    }
-  ]
+  recipes: JSON.parse(localStorage.getItem('recipes')) || []
 };
 
 export const recipeReducer = (state = recipeInitialState, action) => {
@@ -33,13 +16,13 @@ export const recipeReducer = (state = recipeInitialState, action) => {
     }
     case 'UPDATE_RECIPE': {
       const updated = state.recipes.map(r => 
-        r.id === action.payload.id ? action.payload : r
+        r.id === action.payload.id || String(r.id) === String(action.payload.id) ? action.payload : r
       );
       localStorage.setItem('recipes', JSON.stringify(updated));
       return { ...state, recipes: updated };
     }
     case 'DELETE_RECIPE': {
-      const updated = state.recipes.filter(r => r.id !== action.payload);
+      const updated = state.recipes.filter(r => !(r.id === action.payload || String(r.id) === String(action.payload)));
       localStorage.setItem('recipes', JSON.stringify(updated));
       return { ...state, recipes: updated };
     }
@@ -52,7 +35,6 @@ export const recipeReducer = (state = recipeInitialState, action) => {
   }
 };
 
-// Auth Reducer
 const authInitialState = {
   user: JSON.parse(localStorage.getItem('currentUser')) || null,
   users: JSON.parse(localStorage.getItem('users')) || [

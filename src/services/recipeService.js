@@ -8,8 +8,10 @@ export const recipeService = {
       if (!response.ok) throw new Error('Failed to fetch recipes');
       return await response.json();
     } catch (error) {
-      console.error('Error fetching recipes:', error);
-      return [];
+      console.warn('JSON Server unavailable, using localStorage:', error);
+      // Fallback to localStorage
+      const stored = localStorage.getItem('recipes');
+      return stored ? JSON.parse(stored) : [];
     }
   },
 
@@ -18,10 +20,14 @@ export const recipeService = {
     try {
       const response = await fetch(`${API_URL}/${id}`);
       if (!response.ok) throw new Error('Failed to fetch recipe');
-      return await response.json();
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.error('Error fetching recipe:', error);
-      return null;
+      console.warn('JSON Server unavailable, using localStorage:', error);
+      // Fallback to localStorage
+      const stored = localStorage.getItem('recipes');
+      const recipes = stored ? JSON.parse(stored) : [];
+      return recipes.find(r => String(r.id) === String(id)) || null;
     }
   },
 
@@ -38,8 +44,17 @@ export const recipeService = {
       if (!response.ok) throw new Error('Failed to add recipe');
       return await response.json();
     } catch (error) {
-      console.error('Error adding recipe:', error);
-      throw error;
+      console.warn('JSON Server unavailable, saving to localStorage:', error);
+      // Fallback to localStorage
+      const newRecipe = {
+        ...recipe,
+        id: Date.now()
+      };
+      const stored = localStorage.getItem('recipes');
+      const recipes = stored ? JSON.parse(stored) : [];
+      recipes.push(newRecipe);
+      localStorage.setItem('recipes', JSON.stringify(recipes));
+      return newRecipe;
     }
   },
 
@@ -56,7 +71,16 @@ export const recipeService = {
       if (!response.ok) throw new Error('Failed to update recipe');
       return await response.json();
     } catch (error) {
-      console.error('Error updating recipe:', error);
+      console.warn('JSON Server unavailable, updating localStorage:', error);
+      // Fallback to localStorage
+      const stored = localStorage.getItem('recipes');
+      const recipes = stored ? JSON.parse(stored) : [];
+      const index = recipes.findIndex(r => r.id === parseInt(id));
+      if (index !== -1) {
+        recipes[index] = { ...recipe, id: parseInt(id) };
+        localStorage.setItem('recipes', JSON.stringify(recipes));
+        return recipes[index];
+      }
       throw error;
     }
   },
@@ -70,8 +94,13 @@ export const recipeService = {
       if (!response.ok) throw new Error('Failed to delete recipe');
       return true;
     } catch (error) {
-      console.error('Error deleting recipe:', error);
-      throw error;
+      console.warn('JSON Server unavailable, deleting from localStorage:', error);
+      // Fallback to localStorage
+      const stored = localStorage.getItem('recipes');
+      const recipes = stored ? JSON.parse(stored) : [];
+      const filtered = recipes.filter(r => r.id !== parseInt(id));
+      localStorage.setItem('recipes', JSON.stringify(filtered));
+      return true;
     }
   }
 };

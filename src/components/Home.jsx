@@ -18,9 +18,12 @@ const Home = () => {
       try {
         setLoading(true);
         const data = await recipeService.getAllRecipes();
-        dispatch(setRecipes(data));
+        dispatch(setRecipes(data || []));
       } catch (error) {
         console.error('Failed to fetch recipes:', error);
+        // Try to load from localStorage as fallback
+        const stored = localStorage.getItem('recipes');
+        dispatch(setRecipes(stored ? JSON.parse(stored) : []));
       } finally {
         setLoading(false);
       }
@@ -66,9 +69,16 @@ const Home = () => {
       </div>
 
       {loading ? (
-        <p className="no-recipes">Loading recipes...</p>
+        <p className="no-recipes">⏳ Loading recipes...</p>
       ) : filtered.length === 0 ? (
-        <p className="no-recipes">No recipes found</p>
+        <div className="no-recipes">
+          <div className="no-recipes-title">🍳 No recipes found</div>
+          <p>
+            {recipes.length === 0
+              ? 'Start by adding your first recipe!'
+              : 'Try a different search term'}
+          </p>
+        </div>
       ) : (
         <div className="recipes-grid">
           {filtered.map(recipe => (
@@ -86,7 +96,7 @@ const Home = () => {
                   >
                     View Details
                   </button>
-                  {user && user.id === recipe.userId && (
+                  {user && (String(user.id) === String(recipe.userId) || user.id === recipe.userId) && (
                     <>
                       <button
                         className="btn btn-small btn-edit"

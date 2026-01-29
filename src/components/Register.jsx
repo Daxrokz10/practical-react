@@ -34,67 +34,74 @@ const Register = () => {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>Recipe Book</h1>
-        <h2>Create Account</h2>
+        <h1>🍳 Recipe Book</h1>
+        <h2>Join Our Community</h2>
         
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error">⚠️ {error}</div>}
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Full Name</label>
+            <label>👤 Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your full name"
               required
             />
           </div>
           
           <div className="form-group">
-            <label>Email</label>
+            <label>📧 Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
             />
           </div>
           
           <div className="form-group">
-            <label>Username</label>
+            <label>👨‍💻 Username</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              placeholder="Choose a username"
               required
             />
           </div>
           
           <div className="form-group">
-            <label>Password</label>
+            <label>🔐 Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Min 4 characters"
               required
             />
           </div>
           
           <div className="form-group">
-            <label>Confirm Password</label>
+            <label>🔐 Confirm Password</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your password"
               required
             />
           </div>
           
-          <button type="submit" className="btn btn-primary">Sign Up</button>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+            Create Account
+          </button>
         </form>
         
         <p className="link-text">
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
       </div>
     </div>

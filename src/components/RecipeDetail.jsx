@@ -12,10 +12,12 @@ const RecipeDetail = () => {
     const fetchRecipe = async () => {
       try {
         setLoading(true);
-        const data = await recipeService.getRecipeById(parseInt(id));
+        // Try fetching as number first, then as string
+        let data = await recipeService.getRecipeById(id);
         if (data) {
           setRecipe(data);
         } else {
+          console.error('Recipe not found with ID:', id);
           alert('Recipe not found');
           navigate('/');
         }
@@ -34,7 +36,7 @@ const RecipeDetail = () => {
   if (loading) {
     return (
       <div className="container">
-        <p>Loading recipe...</p>
+        <p style={{ textAlign: 'center', padding: '2rem' }}>⏳ Loading recipe...</p>
       </div>
     );
   }
@@ -42,14 +44,14 @@ const RecipeDetail = () => {
   if (!recipe) {
     return (
       <div className="container">
-        <p>Recipe not found</p>
+        <p style={{ textAlign: 'center', padding: '2rem' }}>❌ Recipe not found</p>
       </div>
     );
   }
 
   return (
     <div className="container">
-      <button className="btn btn-secondary" onClick={() => navigate('/')}>
+      <button className="btn btn-secondary" onClick={() => navigate('/')} style={{ marginBottom: '2rem' }}>
         ← Back to Recipes
       </button>
 
@@ -60,28 +62,28 @@ const RecipeDetail = () => {
 
         <div className="recipe-detail-content">
           <h1>{recipe.name}</h1>
-          <p className="recipe-author">By: {recipe.author}</p>
+          <p className="recipe-author">👨‍🍳 By: {recipe.author}</p>
           
           <div className="recipe-section">
-            <h3>Description</h3>
+            <h3>📝 Description</h3>
             <p>{recipe.description}</p>
           </div>
 
           <div className="recipe-section">
-            <h3>Ingredients</h3>
+            <h3>🥘 Ingredients</h3>
             <ul className="ingredients-list">
               {Array.isArray(recipe.ingredients) ? (
                 recipe.ingredients.map((ingredient, index) => (
-                  <li key={index}>{ingredient}</li>
+                  <li key={index}>✓ {ingredient}</li>
                 ))
               ) : (
-                <li>{recipe.ingredients}</li>
+                <li>✓ {recipe.ingredients}</li>
               )}
             </ul>
           </div>
 
           <div className="recipe-section">
-            <h3>Cooking Instructions</h3>
+            <h3>👨‍🍳 Cooking Instructions</h3>
             <div className="instructions">
               {Array.isArray(recipe.cookingInstructions) ? (
                 <ol>
@@ -90,9 +92,11 @@ const RecipeDetail = () => {
                   ))}
                 </ol>
               ) : (
-                <p>{recipe.cookingInstructions.split('\n').map((line, index) => (
-                  <div key={index}>{line}</div>
-                ))}</p>
+                <ol>
+                  {recipe.cookingInstructions.split('\n').filter(line => line.trim()).map((line, index) => (
+                    <li key={index}>{line.trim()}</li>
+                  ))}
+                </ol>
               )}
             </div>
           </div>
