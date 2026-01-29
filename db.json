@@ -18,8 +18,8 @@
   "recipes": [
     {
       "id": "f2a6",
-      "name": "Omnis natus ipsum i",
-      "description": "Quia quos minim cum ",
+      "name": "Panner Tikka Masala",
+      "description": "Paneer Tikka Masala is a popular Indian dish made with marinated paneer (Indian cottage cheese) cubes cooked in a rich and creamy tomato-based gravy.",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9ghJo4mJTNsxlJcpWPBCE31A0lk2Maeq-vQ&s",
       "ingredients": [
         "Culpa nisi esse dol"
@@ -43,6 +43,20 @@
       "cookingInstructions": "1.Cook\n2.Eat\n3.Repeat",
       "userId": 1769664934879,
       "author": "neel"
+    },
+    {
+      "id": "522d",
+      "name": "Pasta",
+      "description": "Red & White Pasta",
+      "image": "https://www.spicebangla.com/wp-content/uploads/2024/08/Spicy-Pasta-recipe-optimised-scaled.webp",
+      "ingredients": [
+        "Pasta",
+        "Spices",
+        "Etc"
+      ],
+      "cookingInstructions": "cook",
+      "userId": 1769667089028,
+      "author": "Daksh"
     }
   ]
 }
