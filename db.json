@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Abebe Kebede",
+      "email": "abebe@example.com",
+      "password": "password123",
+      "username": "abebe"
+    },
+    {
+      "id": 2,
+      "name": "Almaz Tesfaye",
+      "email": "almaz@example.com",
+      "password": "password123",
+      "username": "almaz"
+    }
+  ],
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Doro Wat",
+      "description": "Ethiopian chicken stew",
+      "image": "https://via.placeholder.com/300x200?text=Doro+Wat",
+      "ingredients": ["Chicken", "Onions", "Garlic", "Ginger", "Chilies", "Spices"],
+      "cookingInstructions": "1. Sauté onions and spices\n2. Add chicken and brown\n3. Simmer with broth\n4. Cook until tender",
+      "userId": 1,
+      "author": "abebe"
+    },
+    {
+      "id": 2,
+      "name": "Injera",
+      "description": "Ethiopian flatbread",
+      "image": "https://via.placeholder.com/300x200?text=Injera",
+      "ingredients": ["Teff flour", "Water", "Salt"],
+      "cookingInstructions": "1. Mix teff flour with water\n2. Let ferment for 3 days\n3. Heat griddle\n4. Pour batter and cook",
+      "userId": 1,
+      "author": "abebe"
+    }
+  ]
+}
